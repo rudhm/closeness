@@ -1,21 +1,22 @@
-# Closer — Couple's Distance & Meeting Tracker
+# Closer — Couple's Distance & Meeting Tracker (Static Version)
 
-Closer is a private, real-time web application for couples to track their distance and countdown to their next meeting. No accounts, no email, no tracking — just a simple 6-character room code to stay connected.
+Closer is a private, real-time web application for couples to track their distance and countdown to their next meeting. This version is **fully static** and uses **Peer-to-Peer (WebRTC)** for synchronization, meaning no server is required.
 
 ## Features
 
 - **Live Distance**: Real-time distance tracking using the Haversine formula.
 - **Meeting Countdown**: Shared countdown timer for your next rendezvous.
 - **Travel Estimates**: Estimates for walking, car, and train travel.
-- **Shared Session**: Sync coordinates and timers via WebSockets (Socket.io).
-- **Private**: All data lives in-memory on the server and expires after 24 hours of inactivity.
+- **Peer-to-Peer**: Direct browser-to-browser connection using PeerJS (WebRTC).
+- **Private**: No data is ever stored on a server. Your locations are shared only with your partner.
 - **PWA Ready**: Installable on mobile for a native-like experience.
+- **Static Hosting**: Deployable to GitHub Pages, Netlify, or Vercel.
 
 ## Tech Stack
 
-- **Frontend**: React, Vite, Tailwind CSS, Zustand, Lucide React.
-- **Backend**: Node.js, Express, Socket.io.
-- **Deployment**: Docker, Docker Compose.
+- **Frontend**: React, Vite, Tailwind CSS, Zustand, PeerJS.
+- **Icons**: Lucide React.
+- **Hosting**: GitHub Pages compatible.
 
 ## Getting Started
 
@@ -23,29 +24,29 @@ Closer is a private, real-time web application for couples to track their distan
 
 1. **Install dependencies**:
    ```bash
-   npm run install:all
+   npm install
    ```
 
-2. **Start the development servers**:
+2. **Start the development server**:
    ```bash
    npm run dev
    ```
-   - Client: `http://localhost:5173`
-   - Server: `http://localhost:3001`
+   Open the URL and click "Create New Room". Share the generated code with your partner.
 
-### Using Docker
+## Deployment
 
-1. **Build and run**:
+To deploy to GitHub Pages:
+
+1. **Update `vite.config.ts`**: Ensure `base` matches your repository name.
+2. **Deploy**:
    ```bash
-   docker-compose up --build
+   npm run deploy
    ```
-   The app will be available at `http://localhost:3001`.
 
 ## Implementation Details
 
+- **P2P Sync**: When one person creates a room, they act as the WebRTC host. The partner connects using the room code (Host Peer ID).
 - **Distance**: Calculated using the Haversine formula (Earth radius: 6371km).
-- **Rooms**: 6-character alphanumeric codes generated on the fly.
-- **TTL**: Rooms and their data are automatically purged after 24 hours of inactivity.
 - **Accuracy**: Geolocation uses `enableHighAccuracy` for better results on mobile.
 
 ## License
